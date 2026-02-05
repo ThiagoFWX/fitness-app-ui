@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { BottomNav } from "@/components/bottom-nav"
-import { Check, ChevronRight, Sparkles } from "lucide-react"
+import { Check, ChevronRight, Dumbbell, Apple } from "lucide-react"
 
 export default function Dashboard() {
   const [checklist, setChecklist] = useState([
@@ -26,131 +26,121 @@ export default function Dashboard() {
     )
   }
 
+  const circumference = 2 * Math.PI * 54
+  const offset = circumference * (1 - healthScore / 100)
+
   return (
-    <div className="min-h-screen bg-[#FAFBFC] pb-24">
-      <div className="max-w-md mx-auto">
+    <main className="min-h-dvh bg-background pb-20">
+      <div className="mx-auto max-w-md">
         {/* Header */}
-        <div className="bg-white px-8 pt-16 pb-8 rounded-b-[32px] border-b border-[#F0F1F3]">
-          <h1 className="text-[28px] font-bold text-[#1F2933] mb-2 tracking-tight leading-tight">
-            Good morning, Alex
-          </h1>
-          <p className="text-[17px] text-[#6B7280] font-normal">
-            Ready to make today count?
+        <header className="px-6 pt-14 pb-6">
+          <p className="text-sm font-medium text-muted-foreground">
+            Good morning
           </p>
-        </div>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-foreground">
+            Alex
+          </h1>
+        </header>
 
         {/* Content */}
-        <div className="p-6 space-y-5">
-          {/* Health Score Circle */}
-          <div className="bg-white rounded-[28px] p-8 border border-[#F0F1F3]">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-[20px] font-bold text-[#1F2933] tracking-tight">
-                {"Today's Health Score"}
-              </h2>
-              <Sparkles
-                className="w-5 h-5 text-[#2ECC71]"
-                strokeWidth={2.5}
-              />
-            </div>
-            <div className="flex items-center justify-center mb-6">
-              <div className="relative w-44 h-44">
-                <svg className="w-44 h-44 transform -rotate-90">
+        <div className="flex flex-col gap-4 px-5">
+          {/* Health Score */}
+          <section className="rounded-2xl border border-border bg-card p-6">
+            <div className="flex items-start justify-between">
+              <div>
+                <h2 className="text-sm font-semibold text-foreground">
+                  {"Today's Score"}
+                </h2>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {completedCount} of {totalCount} tasks done
+                </p>
+              </div>
+              <div className="relative h-28 w-28 flex-shrink-0">
+                <svg className="h-28 w-28 -rotate-90" viewBox="0 0 120 120">
                   <circle
-                    cx="88"
-                    cy="88"
-                    r="78"
-                    stroke="#F5F6F8"
-                    strokeWidth="14"
+                    cx="60"
+                    cy="60"
+                    r="54"
                     fill="none"
+                    strokeWidth="8"
+                    className="stroke-muted"
                   />
                   <circle
-                    cx="88"
-                    cy="88"
-                    r="78"
-                    stroke="#2ECC71"
-                    strokeWidth="14"
+                    cx="60"
+                    cy="60"
+                    r="54"
                     fill="none"
-                    strokeDasharray={`${2 * Math.PI * 78}`}
-                    strokeDashoffset={`${
-                      2 * Math.PI * 78 * (1 - healthScore / 100)
-                    }`}
+                    strokeWidth="8"
                     strokeLinecap="round"
-                    className="transition-all duration-500"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={offset}
+                    className="stroke-primary transition-all duration-700 ease-out"
                   />
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-[48px] font-bold text-[#1F2933] tracking-tight leading-none">
+                  <span className="text-2xl font-bold tracking-tight text-foreground">
                     {healthScore}
                   </span>
-                  <span className="text-[15px] text-[#9CA3AF] mt-1 font-medium">
-                    out of 100
+                  <span className="text-[10px] font-medium text-muted-foreground">
+                    / 100
                   </span>
                 </div>
               </div>
             </div>
-            <p className="text-center text-[15px] text-[#6B7280] leading-relaxed">
-              Complete more tasks to improve your score
-            </p>
-          </div>
+          </section>
 
-          {/* Body Avatar Preview */}
+          {/* Progress Banner */}
           <Link
             href="/progress"
-            className="bg-gradient-to-br from-[#4A90E2] to-[#2ECC71] rounded-[28px] p-8 flex items-center justify-between active:scale-[0.98] transition-all shadow-[0_8px_30px_rgba(46,204,113,0.2)]"
+            className="flex items-center justify-between rounded-2xl bg-foreground p-5 active:scale-[0.98] transition-transform"
           >
             <div>
-              <h3 className="text-[20px] font-bold text-white mb-2 tracking-tight">
+              <h3 className="text-sm font-semibold text-background">
                 Your Progress
               </h3>
-              <p className="text-[15px] text-white/80 leading-relaxed">
+              <p className="mt-1 text-xs text-background/60">
                 See your body transformation
               </p>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-14 h-20 bg-white/20 rounded-full backdrop-blur-sm" />
-              <ChevronRight
-                className="w-6 h-6 text-white"
-                strokeWidth={2.5}
-              />
-            </div>
+            <ChevronRight className="h-5 w-5 text-background/40" strokeWidth={2} />
           </Link>
 
           {/* Daily Checklist */}
-          <div className="bg-white rounded-[28px] p-7 border border-[#F0F1F3]">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-[20px] font-bold text-[#1F2933] tracking-tight">
+          <section className="rounded-2xl border border-border bg-card p-5">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="text-sm font-semibold text-foreground">
                 Daily Checklist
               </h2>
-              <span className="text-[15px] font-semibold text-[#2ECC71] bg-[#2ECC71]/10 px-3 py-1 rounded-full">
+              <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
                 {completedCount}/{totalCount}
               </span>
             </div>
-            <div className="space-y-3">
+            <div className="flex flex-col gap-1">
               {checklist.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => toggleTask(item.id)}
-                  className="w-full flex items-center gap-3.5 p-4 rounded-[16px] hover:bg-[#FAFBFC] active:scale-[0.98] transition-all"
+                  className="flex w-full items-center gap-3 rounded-xl p-3 text-left transition-colors hover:bg-muted/50 active:scale-[0.98]"
                 >
                   <div
-                    className={`w-6 h-6 rounded-[10px] flex items-center justify-center flex-shrink-0 transition-all ${
+                    className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md transition-all ${
                       item.completed
-                        ? "bg-[#22C55E] scale-110"
-                        : "bg-white border-[2.5px] border-[#E5E7EB]"
+                        ? "bg-primary"
+                        : "border-2 border-border"
                     }`}
                   >
                     {item.completed && (
                       <Check
-                        className="w-4 h-4 text-white"
+                        className="h-3 w-3 text-primary-foreground"
                         strokeWidth={3}
                       />
                     )}
                   </div>
                   <span
-                    className={`text-[16px] text-left font-medium transition-all ${
+                    className={`text-sm font-medium transition-colors ${
                       item.completed
-                        ? "text-[#9CA3AF] line-through"
-                        : "text-[#1F2933]"
+                        ? "text-muted-foreground line-through"
+                        : "text-foreground"
                     }`}
                   >
                     {item.text}
@@ -158,47 +148,47 @@ export default function Dashboard() {
                 </button>
               ))}
             </div>
-          </div>
+          </section>
 
           {/* Quick Actions */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3">
             <Link
               href="/workout"
-              className="bg-white rounded-[24px] p-6 border border-[#F0F1F3] hover:border-[#2ECC71] active:scale-[0.98] transition-all"
+              className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/30 active:scale-[0.98]"
             >
-              <div className="w-12 h-12 bg-[#2ECC71]/10 rounded-[16px] flex items-center justify-center mb-4">
-                <span className="text-2xl" role="img" aria-label="Workout">
-                  {"💪"}
-                </span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+                <Dumbbell className="h-5 w-5 text-primary" strokeWidth={2} />
               </div>
-              <h3 className="font-semibold text-[17px] text-[#1F2933] mb-1.5 tracking-tight">
-                Start Workout
-              </h3>
-              <p className="text-[14px] text-[#9CA3AF] leading-relaxed">
-                15 min session
-              </p>
+              <div>
+                <h3 className="text-sm font-semibold text-foreground">
+                  Start Workout
+                </h3>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  15 min session
+                </p>
+              </div>
             </Link>
             <Link
               href="/nutrition"
-              className="bg-white rounded-[24px] p-6 border border-[#F0F1F3] hover:border-[#4A90E2] active:scale-[0.98] transition-all"
+              className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/30 active:scale-[0.98]"
             >
-              <div className="w-12 h-12 bg-[#4A90E2]/10 rounded-[16px] flex items-center justify-center mb-4">
-                <span className="text-2xl" role="img" aria-label="Nutrition">
-                  {"🥗"}
-                </span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-chart-2/10">
+                <Apple className="h-5 w-5 text-chart-2" strokeWidth={2} />
               </div>
-              <h3 className="font-semibold text-[17px] text-[#1F2933] mb-1.5 tracking-tight">
-                {"Today's Recipe"}
-              </h3>
-              <p className="text-[14px] text-[#9CA3AF] leading-relaxed">
-                {"Healthy & easy"}
-              </p>
+              <div>
+                <h3 className="text-sm font-semibold text-foreground">
+                  {"Today's Recipe"}
+                </h3>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  {"Healthy & easy"}
+                </p>
+              </div>
             </Link>
           </div>
         </div>
       </div>
 
       <BottomNav />
-    </div>
+    </main>
   )
 }

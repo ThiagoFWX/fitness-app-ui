@@ -1,46 +1,16 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { BottomNav } from "@/components/bottom-nav"
 import { Clock, Repeat, Check } from "lucide-react"
-import { ImageWithFallback } from "@/components/image-with-fallback"
 
 const exercises = [
-  {
-    id: 1,
-    name: "Push-ups",
-    sets: "3 sets",
-    reps: "12 reps",
-    duration: "2 min",
-  },
-  {
-    id: 2,
-    name: "Squats",
-    sets: "3 sets",
-    reps: "15 reps",
-    duration: "3 min",
-  },
-  {
-    id: 3,
-    name: "Plank",
-    sets: "3 sets",
-    reps: "30 sec",
-    duration: "2 min",
-  },
-  {
-    id: 4,
-    name: "Lunges",
-    sets: "3 sets",
-    reps: "10 each leg",
-    duration: "3 min",
-  },
-  {
-    id: 5,
-    name: "Mountain climbers",
-    sets: "3 sets",
-    reps: "20 reps",
-    duration: "2 min",
-  },
+  { id: 1, name: "Push-ups", sets: "3 sets", reps: "12 reps", duration: "2 min" },
+  { id: 2, name: "Squats", sets: "3 sets", reps: "15 reps", duration: "3 min" },
+  { id: 3, name: "Plank", sets: "3 sets", reps: "30 sec", duration: "2 min" },
+  { id: 4, name: "Lunges", sets: "3 sets", reps: "10 each leg", duration: "3 min" },
+  { id: 5, name: "Mountain Climbers", sets: "3 sets", reps: "20 reps", duration: "2 min" },
 ]
 
 export default function Workout() {
@@ -53,100 +23,98 @@ export default function Workout() {
   }
 
   const allCompleted = completedExercises.length === exercises.length
+  const progress = (completedExercises.length / exercises.length) * 100
 
   return (
-    <div className="min-h-screen bg-[#FAFBFC] pb-24">
-      <div className="max-w-md mx-auto">
-        {/* Header with Image */}
+    <main className="min-h-dvh bg-background pb-20">
+      <div className="mx-auto max-w-md">
+        {/* Hero header */}
         <div className="relative">
-          <div className="h-64 overflow-hidden">
-            <ImageWithFallback
-              src="https://images.unsplash.com/photo-1758599879895-97aa69b6dd83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob21lJTIwd29ya291dCUyMGV4ZXJjaXNlJTIwd29tYW58ZW58MXx8fHwxNzcwMzI4ODI0fDA&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Workout"
-              className="w-full h-full object-cover"
+          <div className="h-56 overflow-hidden">
+            <Image
+              src="/images/workout-hero.jpg"
+              alt="Workout session"
+              width={600}
+              height={400}
+              className="h-full w-full object-cover"
+              priority
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-          <div className="absolute bottom-8 left-8 right-8">
-            <h1 className="text-[34px] font-bold text-white mb-3 tracking-tight leading-tight">
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 px-6 pb-6">
+            <h1 className="text-2xl font-bold tracking-tight text-background">
               {"Today's Workout"}
             </h1>
-            <div className="flex items-center gap-5 text-white/90 text-[15px] font-medium">
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                <Clock className="w-4 h-4" strokeWidth={2.5} />
-                <span>15 min</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                <Repeat className="w-4 h-4" strokeWidth={2.5} />
-                <span>5 exercises</span>
-              </div>
+            <div className="mt-3 flex items-center gap-3">
+              <span className="flex items-center gap-1.5 rounded-full bg-background/10 px-3 py-1 text-xs font-medium text-background/90 backdrop-blur-sm">
+                <Clock className="h-3.5 w-3.5" strokeWidth={2} />
+                15 min
+              </span>
+              <span className="flex items-center gap-1.5 rounded-full bg-background/10 px-3 py-1 text-xs font-medium text-background/90 backdrop-blur-sm">
+                <Repeat className="h-3.5 w-3.5" strokeWidth={2} />
+                5 exercises
+              </span>
             </div>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-4">
-          {/* Progress Banner */}
-          <div className="bg-white rounded-[24px] p-5 border border-[#F0F1F3]">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[15px] font-semibold text-[#6B7280]">
-                Progress
-              </span>
-              <span className="text-[17px] font-bold text-[#2ECC71]">
+        <div className="flex flex-col gap-3 px-5 pt-5">
+          {/* Progress */}
+          <div className="flex items-center justify-between rounded-2xl border border-border bg-card px-5 py-4">
+            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              Progress
+            </span>
+            <div className="flex items-center gap-3">
+              <div className="h-1.5 w-24 overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full bg-primary transition-all duration-500"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+              <span className="text-xs font-bold text-foreground">
                 {completedExercises.length}/{exercises.length}
               </span>
             </div>
-            <div className="w-full bg-[#F5F6F8] rounded-full h-2.5 overflow-hidden">
-              <div
-                className="h-full bg-[#2ECC71] rounded-full transition-all duration-500"
-                style={{
-                  width: `${(completedExercises.length / exercises.length) * 100}%`,
-                }}
-              />
-            </div>
           </div>
 
-          {/* Exercise Cards */}
+          {/* Exercise cards */}
           {exercises.map((exercise) => {
             const isCompleted = completedExercises.includes(exercise.id)
             return (
               <div
                 key={exercise.id}
-                className={`bg-white rounded-[24px] p-6 border transition-all ${
-                  isCompleted
-                    ? "opacity-50 border-[#F0F1F3]"
-                    : "border-[#F0F1F3] hover:border-[#2ECC71]"
+                className={`rounded-2xl border bg-card p-5 transition-all ${
+                  isCompleted ? "border-border opacity-50" : "border-border"
                 }`}
               >
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h3 className="text-[19px] font-bold text-[#1F2933] mb-3 tracking-tight">
+                    <h3 className="text-sm font-semibold text-foreground">
                       {exercise.name}
                     </h3>
-                    <div className="flex items-center gap-4 text-[14px] text-[#9CA3AF] font-medium">
+                    <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
                       <span>{exercise.sets}</span>
-                      <span className="text-[#E5E7EB]">{"•"}</span>
+                      <span className="text-border">{"/"}</span>
                       <span>{exercise.reps}</span>
-                      <span className="text-[#E5E7EB]">{"•"}</span>
-                      <span className="flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5" strokeWidth={2.5} />
+                      <span className="text-border">{"/"}</span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="h-3 w-3" strokeWidth={2} />
                         {exercise.duration}
                       </span>
                     </div>
                   </div>
                   <button
                     onClick={() => toggleExercise(exercise.id)}
-                    className={`w-9 h-9 rounded-[12px] flex items-center justify-center flex-shrink-0 transition-all active:scale-95 ${
+                    aria-label={isCompleted ? `Mark ${exercise.name} incomplete` : `Mark ${exercise.name} complete`}
+                    className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg transition-all active:scale-90 ${
                       isCompleted
-                        ? "bg-[#22C55E] scale-110"
-                        : "bg-white border-[2.5px] border-[#E5E7EB] hover:border-[#2ECC71]"
+                        ? "bg-primary"
+                        : "border-2 border-border hover:border-primary/40"
                     }`}
                   >
                     {isCompleted && (
-                      <Check
-                        className="w-5 h-5 text-white"
-                        strokeWidth={3}
-                      />
+                      <Check className="h-4 w-4 text-primary-foreground" strokeWidth={3} />
                     )}
                   </button>
                 </div>
@@ -154,13 +122,13 @@ export default function Workout() {
             )
           })}
 
-          {/* Complete Button */}
+          {/* Complete button */}
           <button
             disabled={!allCompleted}
-            className={`w-full py-[18px] rounded-[20px] font-semibold text-[17px] transition-all ${
+            className={`mt-2 w-full rounded-2xl py-4 text-sm font-semibold transition-all ${
               allCompleted
-                ? "bg-[#2ECC71] text-white shadow-[0_8px_30px_rgba(46,204,113,0.25)] active:scale-[0.98]"
-                : "bg-[#F5F6F8] text-[#D1D5DB] cursor-not-allowed"
+                ? "bg-primary text-primary-foreground active:scale-[0.98]"
+                : "bg-muted text-muted-foreground/40 cursor-not-allowed"
             }`}
           >
             {allCompleted ? "Workout Complete!" : "Complete all exercises"}
@@ -169,6 +137,6 @@ export default function Workout() {
       </div>
 
       <BottomNav />
-    </div>
+    </main>
   )
 }

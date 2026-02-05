@@ -1,146 +1,104 @@
 import { BottomNav } from "@/components/bottom-nav"
-import { TrendingUp, Calendar, Target, Zap } from "lucide-react"
+import { Target, Zap, Calendar, Trophy } from "lucide-react"
 
 const weeklyData = [
-  { day: "Mon", completed: true, value: 80 },
-  { day: "Tue", completed: true, value: 90 },
-  { day: "Wed", completed: true, value: 75 },
-  { day: "Thu", completed: true, value: 85 },
-  { day: "Fri", completed: true, value: 95 },
-  { day: "Sat", completed: false, value: 0 },
-  { day: "Sun", completed: false, value: 0 },
+  { day: "Mon", value: 80, active: true },
+  { day: "Tue", value: 90, active: true },
+  { day: "Wed", value: 75, active: true },
+  { day: "Thu", value: 85, active: true },
+  { day: "Fri", value: 95, active: true },
+  { day: "Sat", value: 0, active: false },
+  { day: "Sun", value: 0, active: false },
 ]
 
 const stats = [
-  {
-    label: "Current Streak",
-    value: "5",
-    unit: "days",
-    icon: Target,
-    color: "text-[#2ECC71]",
-    bg: "bg-[#2ECC71]/10",
-  },
-  {
-    label: "Total Workouts",
-    value: "18",
-    unit: "sessions",
-    icon: Zap,
-    color: "text-[#4A90E2]",
-    bg: "bg-[#4A90E2]/10",
-  },
-  {
-    label: "Active Days",
-    value: "23",
-    unit: "this month",
-    icon: Calendar,
-    color: "text-[#F59E0B]",
-    bg: "bg-[#F59E0B]/10",
-  },
+  { label: "Streak", value: "5", unit: "days", icon: Target, color: "text-primary", bg: "bg-primary/10" },
+  { label: "Workouts", value: "18", unit: "total", icon: Zap, color: "text-chart-2", bg: "bg-chart-2/10" },
+  { label: "Active", value: "23", unit: "this mo.", icon: Calendar, color: "text-warning", bg: "bg-warning/10" },
 ]
 
 export default function Progress() {
   return (
-    <div className="min-h-screen bg-[#FAFBFC] pb-24">
-      <div className="max-w-md mx-auto">
+    <main className="min-h-dvh bg-background pb-20">
+      <div className="mx-auto max-w-md">
         {/* Header */}
-        <div className="bg-white px-8 pt-16 pb-8 rounded-b-[32px] border-b border-[#F0F1F3]">
-          <h1 className="text-[28px] font-bold text-[#1F2933] mb-2 tracking-tight leading-tight">
+        <header className="px-6 pt-14 pb-2">
+          <p className="text-sm font-medium text-muted-foreground">Progress</p>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-foreground">
             Your Progress
           </h1>
-          <p className="text-[17px] text-[#6B7280] font-normal">
-            Keep up the amazing work!
-          </p>
-        </div>
+        </header>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
+        <div className="flex flex-col gap-4 px-5 pt-4">
           {/* Body Evolution */}
-          <div className="bg-white rounded-[28px] p-8 border border-[#F0F1F3]">
-            <h2 className="text-[20px] font-bold text-[#1F2933] mb-7 tracking-tight">
+          <section className="rounded-2xl border border-border bg-card p-6">
+            <h2 className="mb-6 text-sm font-semibold text-foreground">
               Body Evolution
             </h2>
-            <div className="flex items-end justify-center gap-10 mb-6">
+            <div className="flex items-end justify-center gap-8 mb-2">
               {[
-                {
-                  week: "Week 1",
-                  height: "h-20",
-                  color: "bg-[#E5E7EB]",
-                  width: "w-14",
-                },
-                {
-                  week: "Week 4",
-                  height: "h-28",
-                  color: "bg-[#4A90E2]",
-                  width: "w-14",
-                },
-                {
-                  week: "Week 8",
-                  height: "h-36",
-                  color: "bg-[#2ECC71]",
-                  width: "w-14",
-                },
-              ].map((stage, index) => (
-                <div key={index} className="flex flex-col items-center">
+                { label: "Week 1", h: 48, opacity: 0.25 },
+                { label: "Week 4", h: 72, opacity: 0.55 },
+                { label: "Week 8", h: 96, opacity: 1, current: true },
+              ].map((stage, i) => (
+                <div key={i} className="flex flex-col items-center gap-3">
                   <div
-                    className={`rounded-full transition-all ${stage.width} ${stage.height} ${stage.color} shadow-[0_8px_24px_rgba(0,0,0,0.08)]`}
+                    className="w-12 rounded-full bg-primary transition-all"
+                    style={{ height: `${stage.h}px`, opacity: stage.opacity }}
                   />
-                  <div className="text-[13px] text-[#9CA3AF] mt-3.5 font-semibold">
-                    {stage.week}
+                  <div className="flex flex-col items-center gap-1">
+                    <span className="text-xs font-medium text-muted-foreground">
+                      {stage.label}
+                    </span>
+                    {stage.current && (
+                      <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
+                        Current
+                      </span>
+                    )}
                   </div>
-                  {index === 2 && (
-                    <div className="text-[12px] text-[#2ECC71] font-bold mt-1 bg-[#2ECC71]/10 px-2.5 py-0.5 rounded-full">
-                      Current
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
-            <div className="bg-[#FAFBFC] rounded-[20px] p-5 mt-7 border border-[#F0F1F3]">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[15px] text-[#6B7280] font-semibold">
+
+            {/* Overall bar */}
+            <div className="mt-6 rounded-xl bg-muted p-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium text-muted-foreground">
                   Overall Progress
                 </span>
-                <span className="text-[17px] font-bold text-[#2ECC71]">
-                  75%
-                </span>
+                <span className="text-xs font-bold text-primary">75%</span>
               </div>
-              <div className="w-full bg-white rounded-full h-2.5 overflow-hidden">
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-background">
                 <div
-                  className="h-full bg-gradient-to-r from-[#4A90E2] to-[#2ECC71] rounded-full transition-all duration-500"
+                  className="h-full rounded-full bg-primary transition-all"
                   style={{ width: "75%" }}
                 />
               </div>
             </div>
-          </div>
+          </section>
 
-          {/* Weekly Chart */}
-          <div className="bg-white rounded-[28px] p-8 border border-[#F0F1F3]">
-            <h2 className="text-[20px] font-bold text-[#1F2933] mb-7 tracking-tight">
+          {/* Weekly chart */}
+          <section className="rounded-2xl border border-border bg-card p-6">
+            <h2 className="mb-6 text-sm font-semibold text-foreground">
               This Week
             </h2>
-            <div className="flex items-end justify-between h-48 mb-5 gap-2">
-              {weeklyData.map((day, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col items-center gap-3 flex-1"
-                >
-                  <div className="w-full flex items-end justify-center h-40">
+            <div className="flex items-end justify-between gap-2" style={{ height: 140 }}>
+              {weeklyData.map((day, i) => (
+                <div key={i} className="flex flex-1 flex-col items-center gap-2">
+                  <div className="flex w-full items-end justify-center" style={{ height: 110 }}>
                     <div
-                      className={`w-full rounded-t-[12px] transition-all duration-500 ${
-                        day.completed
-                          ? "bg-[#2ECC71] shadow-[0_4px_12px_rgba(46,204,113,0.2)]"
-                          : "bg-[#F5F6F8]"
+                      className={`w-full max-w-[32px] rounded-t-lg transition-all ${
+                        day.active ? "bg-primary" : "bg-muted"
                       }`}
                       style={{
-                        height: day.completed
-                          ? `${(day.value / 100) * 100}%`
-                          : "15%",
+                        height: day.active ? `${(day.value / 100) * 100}%` : "12%",
                       }}
                     />
                   </div>
                   <span
-                    className={`text-[13px] font-semibold ${
-                      day.completed ? "text-[#1F2933]" : "text-[#9CA3AF]"
+                    className={`text-[10px] font-semibold ${
+                      day.active ? "text-foreground" : "text-muted-foreground"
                     }`}
                   >
                     {day.day}
@@ -148,56 +106,51 @@ export default function Progress() {
                 </div>
               ))}
             </div>
-            <p className="text-center text-[15px] text-[#6B7280] leading-relaxed">
+            <p className="mt-4 text-center text-xs text-muted-foreground">
               Daily health score completion
             </p>
-          </div>
+          </section>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-3 gap-4">
-            {stats.map((stat, index) => (
+          {/* Stats */}
+          <div className="grid grid-cols-3 gap-3">
+            {stats.map((stat, i) => (
               <div
-                key={index}
-                className="bg-white rounded-[24px] p-5 border border-[#F0F1F3] text-center"
+                key={i}
+                className="flex flex-col items-center rounded-2xl border border-border bg-card p-4"
               >
                 <div
-                  className={`w-12 h-12 ${stat.bg} rounded-[16px] flex items-center justify-center mx-auto mb-3`}
+                  className={`flex h-10 w-10 items-center justify-center rounded-xl ${stat.bg}`}
                 >
-                  <stat.icon
-                    className={`w-5 h-5 ${stat.color}`}
-                    strokeWidth={2.5}
-                  />
+                  <stat.icon className={`h-4 w-4 ${stat.color}`} strokeWidth={2} />
                 </div>
-                <div className="text-[28px] font-bold text-[#1F2933] mb-1 tracking-tight leading-none">
+                <span className="mt-3 text-xl font-bold tracking-tight text-foreground">
                   {stat.value}
-                </div>
-                <div className="text-[11px] text-[#9CA3AF] leading-tight font-medium">
+                </span>
+                <span className="mt-0.5 text-[10px] font-medium text-muted-foreground">
                   {stat.unit}
-                </div>
+                </span>
               </div>
             ))}
           </div>
 
-          {/* Milestone Card */}
-          <div className="bg-gradient-to-br from-[#4A90E2] to-[#2ECC71] rounded-[28px] p-8 shadow-[0_12px_40px_rgba(46,204,113,0.25)]">
-            <div className="flex items-center gap-5">
-              <div className="w-16 h-16 bg-white rounded-[20px] flex items-center justify-center text-3xl flex-shrink-0 shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
-                {"🏆"}
-              </div>
-              <div className="flex-1">
-                <h3 className="text-[20px] font-bold text-white mb-2 tracking-tight">
-                  Next Milestone
-                </h3>
-                <p className="text-[15px] text-white/85 leading-relaxed">
-                  Complete 7 more workouts for a special badge!
-                </p>
-              </div>
+          {/* Milestone */}
+          <section className="flex items-center gap-4 rounded-2xl bg-foreground p-5">
+            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-background">
+              <Trophy className="h-5 w-5 text-warning" strokeWidth={2} />
             </div>
-          </div>
+            <div className="flex-1">
+              <h3 className="text-sm font-semibold text-background">
+                Next Milestone
+              </h3>
+              <p className="mt-0.5 text-xs text-background/60">
+                Complete 7 more workouts for a special badge!
+              </p>
+            </div>
+          </section>
         </div>
       </div>
 
       <BottomNav />
-    </div>
+    </main>
   )
 }

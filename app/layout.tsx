@@ -2,15 +2,19 @@ import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+})
 
 export const metadata: Metadata = {
   title: "FitLife - Your Personal Fitness Companion",
-  description: "Simple workouts, daily habits and visual progress tracking to help you get in shape at home.",
+  description:
+    "Simple workouts, daily habits and visual progress tracking to help you get in shape at home.",
 }
 
 export const viewport: Viewport = {
-  themeColor: "#2ECC71",
+  themeColor: "#10B77F",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -23,10 +27,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} antialiased`}>
-        {children}
-      </body>
+    <html lang="en" className={inter.variable}>
+      <body className="font-sans">{children}</body>
     </html>
   )
 }

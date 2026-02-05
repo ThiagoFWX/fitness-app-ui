@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Target, TrendingUp, Calendar } from "lucide-react"
+import { Target, TrendingUp, Calendar, ArrowRight } from "lucide-react"
 
 const goals = [
   {
@@ -26,16 +26,8 @@ const goals = [
 ]
 
 const levels = [
-  {
-    id: "beginner",
-    title: "Beginner",
-    description: "Just getting started",
-  },
-  {
-    id: "intermediate",
-    title: "Intermediate",
-    description: "Some experience",
-  },
+  { id: "beginner", title: "Beginner", description: "Just getting started" },
+  { id: "intermediate", title: "Intermediate", description: "Some experience" },
 ]
 
 export default function GoalSelection() {
@@ -43,115 +35,148 @@ export default function GoalSelection() {
   const [selectedGoal, setSelectedGoal] = useState<string | null>(null)
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null)
 
+  const canContinue = selectedGoal && selectedLevel
+
   const handleContinue = () => {
-    if (selectedGoal && selectedLevel) {
+    if (canContinue) {
       router.push("/dashboard")
     }
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col p-8 max-w-md mx-auto">
-      {/* Header */}
-      <div className="mb-10 pt-8">
-        <h1 className="text-[34px] font-bold text-[#1F2933] mb-3 tracking-tight leading-[1.1]">
-          {"What's your goal?"}
-        </h1>
-        <p className="text-[17px] text-[#6B7280] leading-relaxed font-normal">
-          {"We'll personalize your experience"}
-        </p>
-      </div>
+    <main className="flex min-h-dvh flex-col bg-background">
+      <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-6 pt-16 pb-10">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+            {"What's your goal?"}
+          </h1>
+          <p className="mt-2 text-base text-muted-foreground">
+            {"We'll personalize your experience"}
+          </p>
+        </div>
 
-      {/* Goals */}
-      <div className="space-y-4 mb-10">
-        {goals.map((goal) => (
-          <button
-            key={goal.id}
-            onClick={() => setSelectedGoal(goal.id)}
-            className={`w-full text-left p-6 rounded-[24px] transition-all active:scale-[0.98] ${
-              selectedGoal === goal.id
-                ? "bg-[#2ECC71] text-white shadow-[0_8px_30px_rgba(46,204,113,0.25)]"
-                : "bg-[#FAFBFC] text-[#1F2933] hover:bg-[#F5F6F8] border border-[#F0F1F3]"
-            }`}
-          >
-            <div className="flex items-start gap-4">
-              <div
-                className={`w-12 h-12 rounded-[16px] flex items-center justify-center flex-shrink-0 ${
-                  selectedGoal === goal.id
-                    ? "bg-white/15"
-                    : "bg-white border border-[#F0F1F3]"
+        {/* Goals */}
+        <div className="flex flex-col gap-3">
+          {goals.map((goal) => {
+            const isSelected = selectedGoal === goal.id
+            return (
+              <button
+                key={goal.id}
+                onClick={() => setSelectedGoal(goal.id)}
+                className={`flex w-full items-start gap-4 rounded-2xl border p-5 text-left transition-all active:scale-[0.98] ${
+                  isSelected
+                    ? "border-primary bg-primary/5"
+                    : "border-border bg-card hover:border-muted-foreground/20"
                 }`}
               >
-                <goal.icon
-                  className={`w-6 h-6 ${
-                    selectedGoal === goal.id ? "text-white" : "text-[#2ECC71]"
-                  }`}
-                  strokeWidth={2.5}
-                />
-              </div>
-              <div className="flex-1 pt-1">
-                <h3 className="font-semibold text-[18px] mb-1.5 tracking-tight">
-                  {goal.title}
-                </h3>
-                <p
-                  className={`text-[15px] leading-relaxed ${
-                    selectedGoal === goal.id
-                      ? "text-white/75"
-                      : "text-[#6B7280]"
+                <div
+                  className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${
+                    isSelected ? "bg-primary" : "bg-muted"
                   }`}
                 >
-                  {goal.description}
-                </p>
-              </div>
-            </div>
-          </button>
-        ))}
-      </div>
+                  <goal.icon
+                    className={`h-5 w-5 ${
+                      isSelected ? "text-primary-foreground" : "text-muted-foreground"
+                    }`}
+                    strokeWidth={2}
+                  />
+                </div>
+                <div className="flex-1 pt-0.5">
+                  <h3 className="text-sm font-semibold text-foreground">
+                    {goal.title}
+                  </h3>
+                  <p className="mt-0.5 text-sm text-muted-foreground">
+                    {goal.description}
+                  </p>
+                </div>
+                <div
+                  className={`mt-1 h-5 w-5 flex-shrink-0 rounded-full border-2 transition-all ${
+                    isSelected
+                      ? "border-primary bg-primary"
+                      : "border-border"
+                  }`}
+                >
+                  {isSelected && (
+                    <div className="flex h-full w-full items-center justify-center">
+                      <div className="h-1.5 w-1.5 rounded-full bg-primary-foreground" />
+                    </div>
+                  )}
+                </div>
+              </button>
+            )
+          })}
+        </div>
 
-      {/* Level */}
-      <div className="mb-10">
-        <h2 className="text-[22px] font-bold text-[#1F2933] mb-5 tracking-tight">
-          {"What's your level?"}
-        </h2>
-        <div className="space-y-4">
-          {levels.map((level) => (
-            <button
-              key={level.id}
-              onClick={() => setSelectedLevel(level.id)}
-              className={`w-full text-left p-6 rounded-[24px] transition-all active:scale-[0.98] ${
-                selectedLevel === level.id
-                  ? "bg-[#4A90E2] text-white shadow-[0_8px_30px_rgba(74,144,226,0.25)]"
-                  : "bg-[#FAFBFC] text-[#1F2933] hover:bg-[#F5F6F8] border border-[#F0F1F3]"
-              }`}
-            >
-              <h3 className="font-semibold text-[18px] mb-1.5 tracking-tight">
-                {level.title}
-              </h3>
-              <p
-                className={`text-[15px] leading-relaxed ${
-                  selectedLevel === level.id
-                    ? "text-white/75"
-                    : "text-[#6B7280]"
-                }`}
-              >
-                {level.description}
-              </p>
-            </button>
-          ))}
+        {/* Level */}
+        <div className="mt-10">
+          <h2 className="mb-4 text-xl font-bold tracking-tight text-foreground">
+            {"What's your level?"}
+          </h2>
+          <div className="flex flex-col gap-3">
+            {levels.map((level) => {
+              const isSelected = selectedLevel === level.id
+              return (
+                <button
+                  key={level.id}
+                  onClick={() => setSelectedLevel(level.id)}
+                  className={`flex w-full items-center justify-between rounded-2xl border p-5 text-left transition-all active:scale-[0.98] ${
+                    isSelected
+                      ? "border-foreground bg-foreground text-background"
+                      : "border-border bg-card hover:border-muted-foreground/20"
+                  }`}
+                >
+                  <div>
+                    <h3
+                      className={`text-sm font-semibold ${
+                        isSelected ? "text-background" : "text-foreground"
+                      }`}
+                    >
+                      {level.title}
+                    </h3>
+                    <p
+                      className={`mt-0.5 text-sm ${
+                        isSelected ? "text-background/70" : "text-muted-foreground"
+                      }`}
+                    >
+                      {level.description}
+                    </p>
+                  </div>
+                  <div
+                    className={`h-5 w-5 flex-shrink-0 rounded-full border-2 transition-all ${
+                      isSelected
+                        ? "border-background bg-background"
+                        : "border-border"
+                    }`}
+                  >
+                    {isSelected && (
+                      <div className="flex h-full w-full items-center justify-center">
+                        <div className="h-1.5 w-1.5 rounded-full bg-foreground" />
+                      </div>
+                    )}
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-auto pt-10">
+          <button
+            onClick={handleContinue}
+            disabled={!canContinue}
+            className={`flex w-full items-center justify-center gap-2 rounded-2xl py-4 text-base font-semibold transition-all ${
+              canContinue
+                ? "bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98]"
+                : "bg-muted text-muted-foreground/40 cursor-not-allowed"
+            }`}
+          >
+            Continue
+            {canContinue && <ArrowRight className="h-4 w-4" strokeWidth={2.5} />}
+          </button>
         </div>
       </div>
-
-      {/* CTA Button */}
-      <button
-        onClick={handleContinue}
-        disabled={!selectedGoal || !selectedLevel}
-        className={`w-full py-[18px] rounded-[20px] font-semibold text-[17px] transition-all ${
-          selectedGoal && selectedLevel
-            ? "bg-[#2ECC71] text-white shadow-[0_8px_30px_rgba(46,204,113,0.25)] hover:bg-[#27AE60] active:scale-[0.98]"
-            : "bg-[#F5F6F8] text-[#D1D5DB] cursor-not-allowed"
-        }`}
-      >
-        Continue
-      </button>
-    </div>
+    </main>
   )
 }

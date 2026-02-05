@@ -1,56 +1,65 @@
 import Link from "next/link"
-import { ImageWithFallback } from "@/components/image-with-fallback"
+import Image from "next/image"
 
 export default function Onboarding1() {
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-between p-8 max-w-md mx-auto">
-      {/* Skip Button */}
-      <div className="w-full flex justify-end pt-2">
-        <Link
-          href="/goals"
-          className="text-[15px] font-medium text-[#9CA3AF] hover:text-[#1F2933] transition-colors"
-        >
-          Skip
-        </Link>
-      </div>
+    <main className="flex min-h-dvh flex-col bg-background">
+      <div className="mx-auto flex w-full max-w-md flex-1 flex-col">
+        {/* Top bar */}
+        <div className="flex items-center justify-between px-6 pt-14 pb-4">
+          <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            FitLife
+          </span>
+          <Link
+            href="/goals"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Skip
+          </Link>
+        </div>
 
-      {/* Content */}
-      <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
-        {/* Illustration */}
-        <div className="w-full max-w-[280px] mb-12 rounded-[32px] overflow-hidden">
-          <ImageWithFallback
-            src="https://images.unsplash.com/photo-1587428598275-44ed722aafa9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwcGVyc29uJTIwZXhlcmNpc2luZyUyMG1pbmltYWx8ZW58MXx8fHwxNzcwMzI4ODI0fDA&ixlib=rb-4.1.0&q=80&w=1080"
+        {/* Hero image */}
+        <div className="relative mx-5 overflow-hidden rounded-3xl">
+          <Image
+            src="/images/onboarding-hero.jpg"
             alt="Person exercising at home"
-            className="w-full h-72 object-cover"
+            width={600}
+            height={480}
+            className="aspect-[4/3] w-full object-cover"
+            priority
           />
         </div>
 
-        {/* Headline */}
-        <h1 className="text-[32px] font-bold text-[#1F2933] mb-4 leading-[1.2] tracking-tight text-balance">
-          {"Get in shape at home without confusion"}
-        </h1>
+        {/* Content */}
+        <div className="flex flex-1 flex-col justify-between px-6 pt-8 pb-10">
+          <div>
+            <h1 className="text-3xl font-bold leading-tight tracking-tight text-foreground text-balance">
+              Get in shape at home without confusion
+            </h1>
+            <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+              Simple workouts, daily habits and visual progress tracking
+            </p>
+          </div>
 
-        {/* Subtext */}
-        <p className="text-[17px] text-[#6B7280] max-w-sm leading-relaxed font-normal">
-          Simple workouts, daily habits and visual progress
-        </p>
+          <div className="flex flex-col gap-6">
+            {/* Progress indicator */}
+            <div className="flex items-center gap-1.5">
+              <div className="h-1 w-8 rounded-full bg-primary" />
+              <div className="h-1 w-2 rounded-full bg-border" />
+              <div className="h-1 w-2 rounded-full bg-border" />
+              <div className="h-1 w-2 rounded-full bg-border" />
+            </div>
+
+            {/* CTA */}
+            <Link
+              href="/onboarding-2"
+              className="flex w-full items-center justify-center rounded-2xl bg-foreground py-4 text-base font-semibold text-background transition-opacity hover:opacity-90 active:scale-[0.98]"
+            >
+              Get Started
+            </Link>
+          </div>
+        </div>
       </div>
-
-      {/* Progress Dots */}
-      <div className="flex gap-2 mb-8">
-        <div className="w-8 h-1 bg-[#2ECC71] rounded-full" />
-        <div className="w-1 h-1 bg-[#E5E7EB] rounded-full" />
-        <div className="w-1 h-1 bg-[#E5E7EB] rounded-full" />
-        <div className="w-1 h-1 bg-[#E5E7EB] rounded-full" />
-      </div>
-
-      {/* CTA Button */}
-      <Link
-        href="/onboarding-2"
-        className="w-full bg-[#2ECC71] text-white py-[18px] rounded-[20px] font-semibold text-[17px] shadow-[0_8px_30px_rgba(46,204,113,0.25)] hover:bg-[#27AE60] active:scale-[0.98] transition-all text-center"
-      >
-        Start
-      </Link>
-    </div>
+    </main>
   )
 }

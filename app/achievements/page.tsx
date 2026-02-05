@@ -9,7 +9,6 @@ const achievements = [
     description: "Completed 5 days in a row",
     unlocked: true,
     date: "Feb 5, 2026",
-    color: "bg-[#F59E0B]",
   },
   {
     id: 2,
@@ -18,7 +17,6 @@ const achievements = [
     description: "Completed your first workout",
     unlocked: true,
     date: "Feb 1, 2026",
-    color: "bg-[#2ECC71]",
   },
   {
     id: 3,
@@ -27,7 +25,6 @@ const achievements = [
     description: "Complete 7 days in a row",
     unlocked: false,
     date: null,
-    color: "bg-[#4A90E2]",
   },
   {
     id: 4,
@@ -36,7 +33,6 @@ const achievements = [
     description: "Complete 20 total workouts",
     unlocked: false,
     date: null,
-    color: "bg-[#8B5CF6]",
   },
   {
     id: 5,
@@ -45,7 +41,6 @@ const achievements = [
     description: "Complete 10 morning workouts",
     unlocked: false,
     date: null,
-    color: "bg-[#F59E0B]",
   },
   {
     id: 6,
@@ -54,7 +49,6 @@ const achievements = [
     description: "Complete 30 days in a row",
     unlocked: false,
     date: null,
-    color: "bg-[#EF4444]",
   },
 ]
 
@@ -63,147 +57,118 @@ const totalCount = achievements.length
 
 export default function Achievements() {
   return (
-    <div className="min-h-screen bg-[#FAFBFC] pb-24">
-      <div className="max-w-md mx-auto">
+    <main className="min-h-dvh bg-background pb-20">
+      <div className="mx-auto max-w-md">
         {/* Header */}
-        <div className="bg-white px-8 pt-16 pb-8 rounded-b-[32px] border-b border-[#F0F1F3]">
-          <h1 className="text-[28px] font-bold text-[#1F2933] mb-2 tracking-tight leading-tight">
-            Achievements
-          </h1>
-          <p className="text-[17px] text-[#6B7280] font-normal">
+        <header className="px-6 pt-14 pb-2">
+          <p className="text-sm font-medium text-muted-foreground">Achievements</p>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-foreground">
             {unlockedCount} of {totalCount} unlocked
-          </p>
-        </div>
+          </h1>
+        </header>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
-          {/* Streak Banner */}
-          <div className="bg-gradient-to-br from-[#F59E0B] to-[#F97316] rounded-[28px] p-8 shadow-[0_12px_40px_rgba(245,158,11,0.25)]">
-            <div className="flex items-center justify-between mb-5">
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 bg-white rounded-[20px] flex items-center justify-center shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
-                  <Flame
-                    className="w-9 h-9 text-[#F59E0B]"
-                    strokeWidth={2.5}
-                  />
-                </div>
-                <div>
-                  <div className="text-[40px] font-bold text-white tracking-tight leading-none">
-                    5
-                  </div>
-                  <div className="text-[15px] text-white/80 font-medium mt-1">
-                    Day Streak
-                  </div>
-                </div>
+        <div className="flex flex-col gap-4 px-5 pt-4">
+          {/* Streak banner */}
+          <section className="rounded-2xl bg-warning p-5">
+            <div className="flex items-center gap-4">
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-warning-foreground/20">
+                <Flame className="h-6 w-6 text-warning-foreground" strokeWidth={2} />
               </div>
-              <div className="text-right">
-                <div className="text-[15px] text-white/90 mb-1 font-medium">
-                  Keep going!
+              <div className="flex-1">
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-3xl font-bold tracking-tight text-warning-foreground">
+                    5
+                  </span>
+                  <span className="text-sm font-medium text-warning-foreground/80">
+                    day streak
+                  </span>
                 </div>
-                <div className="text-[13px] text-white/70">
+                <p className="mt-0.5 text-xs text-warning-foreground/60">
                   2 more for Perfect Week
-                </div>
+                </p>
               </div>
             </div>
-            <div className="bg-white/20 backdrop-blur-sm rounded-full h-2.5 overflow-hidden">
+            <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-warning-foreground/20">
               <div
-                className="h-full bg-white rounded-full transition-all duration-500"
+                className="h-full rounded-full bg-warning-foreground transition-all"
                 style={{ width: "71%" }}
               />
             </div>
-          </div>
+          </section>
 
-          {/* Progress Overview */}
-          <div className="bg-white rounded-[28px] p-7 border border-[#F0F1F3]">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-[20px] font-bold text-[#1F2933] tracking-tight">
-                Your Progress
+          {/* Progress overview */}
+          <section className="flex items-center justify-between rounded-2xl border border-border bg-card px-5 py-4">
+            <div>
+              <h2 className="text-sm font-semibold text-foreground">
+                Overall Progress
               </h2>
-              <span className="text-[15px] font-bold text-[#2ECC71] bg-[#2ECC71]/10 px-3 py-1.5 rounded-full">
-                {unlockedCount}/{totalCount}
-              </span>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Keep going, you are doing great
+              </p>
             </div>
-            <div className="w-full bg-[#F5F6F8] rounded-full h-2.5 overflow-hidden">
-              <div
-                className="h-full bg-[#2ECC71] rounded-full transition-all duration-500"
-                style={{
-                  width: `${(unlockedCount / totalCount) * 100}%`,
-                }}
-              />
-            </div>
-          </div>
+            <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-bold text-primary">
+              {unlockedCount}/{totalCount}
+            </span>
+          </section>
 
-          {/* Achievements Grid */}
-          <div className="space-y-4">
-            <h2 className="text-[20px] font-bold text-[#1F2933] px-1 tracking-tight">
-              All Achievements
-            </h2>
-            {achievements.map((achievement) => (
+          {/* Achievement list */}
+          <div className="flex flex-col gap-3">
+            {achievements.map((a) => (
               <div
-                key={achievement.id}
-                className={`rounded-[24px] p-6 transition-all border ${
-                  achievement.unlocked
-                    ? "bg-white border-[#F0F1F3]"
-                    : "bg-white/50 border-[#F0F1F3] opacity-60"
+                key={a.id}
+                className={`flex items-start gap-4 rounded-2xl border bg-card p-5 transition-all ${
+                  a.unlocked ? "border-border" : "border-border opacity-50"
                 }`}
               >
-                <div className="flex items-start gap-4">
-                  <div
-                    className={`w-16 h-16 rounded-[20px] flex items-center justify-center flex-shrink-0 ${
-                      achievement.unlocked
-                        ? `${achievement.color} shadow-[0_4px_16px_rgba(0,0,0,0.15)]`
-                        : "bg-[#F5F6F8]"
+                <div
+                  className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl ${
+                    a.unlocked ? "bg-primary" : "bg-muted"
+                  }`}
+                >
+                  <a.icon
+                    className={`h-5 w-5 ${
+                      a.unlocked ? "text-primary-foreground" : "text-muted-foreground"
                     }`}
-                  >
-                    <achievement.icon
-                      className={`w-8 h-8 ${
-                        achievement.unlocked ? "text-white" : "text-[#D1D5DB]"
-                      }`}
-                      strokeWidth={2.5}
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-[18px] text-[#1F2933] mb-1.5 tracking-tight">
-                      {achievement.title}
-                    </h3>
-                    <p className="text-[15px] text-[#6B7280] mb-3 leading-relaxed">
-                      {achievement.description}
-                    </p>
-                    {achievement.unlocked && achievement.date && (
-                      <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#FAFBFC] rounded-full border border-[#F0F1F3]">
-                        <div className="w-1.5 h-1.5 bg-[#2ECC71] rounded-full" />
-                        <span className="text-[13px] text-[#6B7280] font-medium">
-                          Unlocked {achievement.date}
-                        </span>
-                      </div>
-                    )}
-                    {!achievement.unlocked && (
-                      <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#F5F6F8] rounded-full">
-                        <span className="text-[13px] text-[#9CA3AF] font-medium">
-                          Locked
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                    strokeWidth={2}
+                  />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-sm font-semibold text-foreground">
+                    {a.title}
+                  </h3>
+                  <p className="mt-0.5 text-xs text-muted-foreground">
+                    {a.description}
+                  </p>
+                  {a.unlocked && a.date ? (
+                    <span className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-[10px] font-medium text-muted-foreground">
+                      <span className="h-1 w-1 rounded-full bg-primary" />
+                      Unlocked {a.date}
+                    </span>
+                  ) : (
+                    <span className="mt-2 inline-flex rounded-full bg-muted px-2.5 py-1 text-[10px] font-medium text-muted-foreground">
+                      Locked
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Motivation Card */}
-          <div className="bg-gradient-to-br from-[#4A90E2] to-[#2ECC71] rounded-[28px] p-8 text-center shadow-[0_12px_40px_rgba(46,204,113,0.25)]">
-            <div className="text-5xl mb-4">{"🎯"}</div>
-            <h3 className="text-[22px] font-bold text-white mb-3 tracking-tight">
+          {/* Motivation */}
+          <section className="rounded-2xl bg-foreground p-6 text-center">
+            <Target className="mx-auto h-8 w-8 text-primary" strokeWidth={1.5} />
+            <h3 className="mt-4 text-lg font-bold text-background">
               Keep pushing forward!
             </h3>
-            <p className="text-[15px] text-white/85 leading-relaxed max-w-xs mx-auto">
-              {"You're doing great. Every small step counts towards your goal."}
+            <p className="mx-auto mt-2 max-w-[240px] text-xs leading-relaxed text-background/60">
+              {"Every small step counts towards your goal. You're doing great."}
             </p>
-          </div>
+          </section>
         </div>
       </div>
 
       <BottomNav />
-    </div>
+    </main>
   )
 }

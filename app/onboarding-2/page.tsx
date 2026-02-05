@@ -5,82 +5,92 @@ const features = [
   {
     icon: Dumbbell,
     title: "Guided home workouts",
-    description: "Follow along with easy exercises",
+    description: "Follow along with easy exercises designed for any level",
   },
   {
     icon: CheckSquare,
     title: "Daily checklist habits",
-    description: "Build consistency with small tasks",
+    description: "Build consistency with small tasks that compound over time",
   },
   {
     icon: Apple,
     title: "Simple nutrition tips",
-    description: "Healthy eating made easy",
+    description: "Healthy eating made practical with easy recipes",
   },
 ]
 
 export default function Onboarding2() {
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-between p-8 max-w-md mx-auto">
-      {/* Skip Button */}
-      <div className="w-full flex justify-end pt-2">
-        <Link
-          href="/goals"
-          className="text-[15px] font-medium text-[#9CA3AF] hover:text-[#1F2933] transition-colors"
-        >
-          Skip
-        </Link>
-      </div>
+    <main className="flex min-h-dvh flex-col bg-background">
+      <div className="mx-auto flex w-full max-w-md flex-1 flex-col">
+        {/* Top bar */}
+        <div className="flex items-center justify-between px-6 pt-14 pb-4">
+          <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            FitLife
+          </span>
+          <Link
+            href="/goals"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Skip
+          </Link>
+        </div>
 
-      {/* Content */}
-      <div className="flex-1 flex flex-col items-center justify-center text-center px-4 w-full">
-        {/* Headline */}
-        <h1 className="text-[32px] font-bold text-[#1F2933] mb-3 leading-[1.2] tracking-tight">
-          How it works
-        </h1>
-        <p className="text-[17px] text-[#6B7280] mb-12 max-w-sm leading-relaxed font-normal">
-          Three simple steps to transform your fitness
-        </p>
+        {/* Content */}
+        <div className="flex flex-1 flex-col justify-between px-6 pt-6 pb-10">
+          <div>
+            <h1 className="text-3xl font-bold leading-tight tracking-tight text-foreground">
+              How it works
+            </h1>
+            <p className="mt-2 text-base leading-relaxed text-muted-foreground">
+              Three simple steps to transform your fitness
+            </p>
 
-        {/* Feature Cards */}
-        <div className="w-full space-y-4 mb-8">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-[#FAFBFC] rounded-[24px] p-6 text-left border border-[#F0F1F3]"
-            >
-              <div className="w-12 h-12 bg-[#2ECC71] rounded-[16px] flex items-center justify-center mb-4 shadow-[0_4px_16px_rgba(46,204,113,0.15)]">
-                <feature.icon
-                  className="w-6 h-6 text-white"
-                  strokeWidth={2.5}
-                />
-              </div>
-              <h3 className="text-[18px] font-semibold text-[#1F2933] mb-2 tracking-tight">
-                {feature.title}
-              </h3>
-              <p className="text-[15px] text-[#6B7280] leading-relaxed">
-                {feature.description}
-              </p>
+            {/* Feature cards */}
+            <div className="mt-10 flex flex-col gap-4">
+              {features.map((feature, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-4 rounded-2xl border border-border bg-card p-5"
+                >
+                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10">
+                    <feature.icon
+                      className="h-5 w-5 text-primary"
+                      strokeWidth={2}
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-sm font-semibold text-foreground">
+                      {feature.title}
+                    </h3>
+                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
+
+          <div className="flex flex-col gap-6 pt-8">
+            {/* Progress indicator */}
+            <div className="flex items-center gap-1.5">
+              <div className="h-1 w-2 rounded-full bg-border" />
+              <div className="h-1 w-8 rounded-full bg-primary" />
+              <div className="h-1 w-2 rounded-full bg-border" />
+              <div className="h-1 w-2 rounded-full bg-border" />
+            </div>
+
+            {/* CTA */}
+            <Link
+              href="/onboarding-3"
+              className="flex w-full items-center justify-center rounded-2xl bg-foreground py-4 text-base font-semibold text-background transition-opacity hover:opacity-90 active:scale-[0.98]"
+            >
+              Continue
+            </Link>
+          </div>
         </div>
       </div>
-
-      {/* Progress Dots */}
-      <div className="flex gap-2 mb-8">
-        <div className="w-1 h-1 bg-[#E5E7EB] rounded-full" />
-        <div className="w-8 h-1 bg-[#2ECC71] rounded-full" />
-        <div className="w-1 h-1 bg-[#E5E7EB] rounded-full" />
-        <div className="w-1 h-1 bg-[#E5E7EB] rounded-full" />
-      </div>
-
-      {/* CTA Button */}
-      <Link
-        href="/onboarding-3"
-        className="w-full bg-[#2ECC71] text-white py-[18px] rounded-[20px] font-semibold text-[17px] shadow-[0_8px_30px_rgba(46,204,113,0.25)] hover:bg-[#27AE60] active:scale-[0.98] transition-all text-center"
-      >
-        Continue
-      </Link>
-    </div>
+    </main>
   )
 }

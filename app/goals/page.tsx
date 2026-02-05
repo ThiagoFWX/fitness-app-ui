@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Target, TrendingUp, Calendar, ArrowRight } from "lucide-react"
+import { Target, TrendingUp, Calendar, ArrowRight, Check } from "lucide-react"
 
 const goals = [
   {
@@ -32,10 +32,22 @@ const levels = [
 
 export default function GoalSelection() {
   const router = useRouter()
-  const [selectedGoal, setSelectedGoal] = useState<string | null>(null)
+  const [selectedGoals, setSelectedGoals] = useState<Set<string>>(new Set())
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null)
 
-  const canContinue = selectedGoal && selectedLevel
+  const toggleGoal = (id: string) => {
+    setSelectedGoals((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) {
+        next.delete(id)
+      } else {
+        next.add(id)
+      }
+      return next
+    })
+  }
+
+  const canContinue = selectedGoals.size > 0 && selectedLevel
 
   const handleContinue = () => {
     if (canContinue) {
@@ -49,21 +61,22 @@ export default function GoalSelection() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold tracking-tight text-foreground">
-            {"What's your goal?"}
+            {"What are your goals?"}
           </h1>
           <p className="mt-2 text-base text-muted-foreground">
-            {"We'll personalize your experience"}
+            {"Select all that apply. We'll personalize your experience."}
           </p>
         </div>
 
         {/* Goals */}
         <div className="flex flex-col gap-3">
           {goals.map((goal) => {
-            const isSelected = selectedGoal === goal.id
+            const isSelected = selectedGoals.has(goal.id)
             return (
               <button
                 key={goal.id}
-                onClick={() => setSelectedGoal(goal.id)}
+                onClick={() => toggleGoal(goal.id)}
+                aria-pressed={isSelected}
                 className={`flex w-full items-start gap-4 rounded-2xl border p-5 text-left transition-all active:scale-[0.98] ${
                   isSelected
                     ? "border-primary bg-primary/5"
@@ -91,16 +104,14 @@ export default function GoalSelection() {
                   </p>
                 </div>
                 <div
-                  className={`mt-1 h-5 w-5 flex-shrink-0 rounded-full border-2 transition-all ${
+                  className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md border-2 transition-all ${
                     isSelected
                       ? "border-primary bg-primary"
                       : "border-border"
                   }`}
                 >
                   {isSelected && (
-                    <div className="flex h-full w-full items-center justify-center">
-                      <div className="h-1.5 w-1.5 rounded-full bg-primary-foreground" />
-                    </div>
+                    <Check className="h-3 w-3 text-primary-foreground" strokeWidth={3} />
                   )}
                 </div>
               </button>

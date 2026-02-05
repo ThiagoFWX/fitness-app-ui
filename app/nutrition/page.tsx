@@ -29,7 +29,7 @@ const recipe = {
   ],
   macros: [
     { label: "Calories", value: "420", color: "text-primary" },
-    { label: "Protein", value: "25g", color: "text-chart-2" },
+    { label: "Protein", value: "25g", color: "text-secondary" },
     { label: "Fat", value: "15g", color: "text-warning" },
   ],
 }
@@ -38,20 +38,22 @@ export default function Nutrition() {
   const [madeRecipe, setMadeRecipe] = useState(false)
 
   return (
-    <main className="min-h-dvh bg-background pb-20">
+    <main className="min-h-dvh bg-muted pb-24">
       <div className="mx-auto max-w-md">
         {/* Header */}
-        <header className="px-6 pt-14 pb-2">
-          <p className="text-sm font-medium text-muted-foreground">Nutrition</p>
+        <header className="bg-background px-6 pt-14 pb-6">
+          <p className="text-[11px] font-semibold uppercase tracking-widest text-secondary">
+            Nutrition
+          </p>
           <h1 className="mt-1 text-2xl font-bold tracking-tight text-foreground">
             {"Today's Recipe"}
           </h1>
         </header>
 
         {/* Content */}
-        <div className="flex flex-col gap-4 px-5 pt-4">
+        <div className="flex flex-col gap-3 px-5 pt-3">
           {/* Recipe card */}
-          <section className="overflow-hidden rounded-2xl border border-border bg-card">
+          <section className="overflow-hidden rounded-2xl bg-card shadow-[0_1px_3px_0_rgba(0,0,0,0.04)]">
             <div className="h-48 overflow-hidden">
               <Image
                 src="/images/nutrition-hero.jpg"
@@ -66,24 +68,24 @@ export default function Nutrition() {
               <h2 className="text-lg font-bold tracking-tight text-foreground">
                 {recipe.name}
               </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-[13px] text-muted-foreground">
                 {recipe.description}
               </p>
 
               {/* Meta */}
-              <div className="mt-4 flex items-center gap-3">
-                <span className="flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-xs font-medium text-muted-foreground">
+              <div className="mt-4 flex items-center gap-2.5">
+                <span className="flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-[12px] font-medium text-muted-foreground">
                   <Clock className="h-3.5 w-3.5" strokeWidth={2} />
                   {recipe.prepTime}
                 </span>
-                <span className="flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-xs font-medium text-muted-foreground">
+                <span className="flex items-center gap-1.5 rounded-full bg-muted px-3 py-1.5 text-[12px] font-medium text-muted-foreground">
                   <Users className="h-3.5 w-3.5" strokeWidth={2} />
                   {recipe.servings}
                 </span>
               </div>
 
               {/* Macros */}
-              <div className="mt-5 grid grid-cols-3 gap-0 rounded-xl border border-border overflow-hidden">
+              <div className="mt-5 grid grid-cols-3 gap-0 overflow-hidden rounded-xl bg-muted">
                 {recipe.macros.map((macro, i) => (
                   <div
                     key={i}
@@ -94,7 +96,7 @@ export default function Nutrition() {
                     <span className={`text-xl font-bold tracking-tight ${macro.color}`}>
                       {macro.value}
                     </span>
-                    <span className="mt-0.5 text-[10px] font-medium text-muted-foreground">
+                    <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                       {macro.label}
                     </span>
                   </div>
@@ -104,15 +106,15 @@ export default function Nutrition() {
           </section>
 
           {/* Ingredients */}
-          <section className="rounded-2xl border border-border bg-card p-5">
+          <section className="rounded-2xl bg-card p-5 shadow-[0_1px_3px_0_rgba(0,0,0,0.04)]">
             <h3 className="mb-4 text-sm font-semibold text-foreground">
               Ingredients
             </h3>
             <ul className="flex flex-col gap-3">
               {recipe.ingredients.map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <div className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-primary" />
-                  <span className="text-sm leading-relaxed text-foreground">
+                  <div className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary" />
+                  <span className="text-[14px] leading-relaxed text-foreground">
                     {item}
                   </span>
                 </li>
@@ -121,17 +123,17 @@ export default function Nutrition() {
           </section>
 
           {/* Instructions */}
-          <section className="rounded-2xl border border-border bg-card p-5">
+          <section className="rounded-2xl bg-card p-5 shadow-[0_1px_3px_0_rgba(0,0,0,0.04)]">
             <h3 className="mb-4 text-sm font-semibold text-foreground">
               Instructions
             </h3>
             <ol className="flex flex-col gap-4">
               {recipe.instructions.map((step, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-foreground text-xs font-bold text-background">
+                  <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg bg-foreground text-[11px] font-bold text-background">
                     {i + 1}
                   </span>
-                  <span className="pt-0.5 text-sm leading-relaxed text-foreground">
+                  <span className="pt-0.5 text-[14px] leading-relaxed text-foreground">
                     {step}
                   </span>
                 </li>
@@ -142,10 +144,10 @@ export default function Nutrition() {
           {/* Action */}
           <button
             onClick={() => setMadeRecipe(!madeRecipe)}
-            className={`w-full rounded-2xl py-4 text-sm font-semibold transition-all active:scale-[0.98] ${
+            className={`w-full rounded-2xl py-4 text-[15px] font-semibold transition-all active:scale-[0.98] ${
               madeRecipe
-                ? "bg-primary text-primary-foreground"
-                : "bg-foreground text-background hover:opacity-90"
+                ? "bg-primary text-primary-foreground shadow-[0_4px_14px_0_rgba(46,204,113,0.3)]"
+                : "bg-foreground text-background shadow-[0_4px_14px_0_rgba(31,41,51,0.15)] hover:opacity-95"
             }`}
           >
             {madeRecipe ? (

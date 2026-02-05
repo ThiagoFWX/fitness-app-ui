@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Target, TrendingUp, Calendar, ArrowRight, Check } from "lucide-react"
+import { Target, TrendingUp, Calendar, ArrowRight, Check, Zap, Heart } from "lucide-react"
 
 const goals = [
   {
@@ -18,16 +18,29 @@ const goals = [
     description: "Build strength and endurance",
   },
   {
+    id: "build-muscle",
+    icon: Zap,
+    title: "Build muscle",
+    description: "Increase muscle definition",
+  },
+  {
     id: "consistency",
     icon: Calendar,
     title: "Build consistency",
     description: "Create lasting healthy habits",
+  },
+  {
+    id: "wellness",
+    icon: Heart,
+    title: "Improve wellness",
+    description: "Boost energy and overall health",
   },
 ]
 
 const levels = [
   { id: "beginner", title: "Beginner", description: "Just getting started" },
   { id: "intermediate", title: "Intermediate", description: "Some experience" },
+  { id: "advanced", title: "Advanced", description: "Experienced athlete" },
 ]
 
 export default function GoalSelection() {
@@ -60,16 +73,19 @@ export default function GoalSelection() {
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-6 pt-16 pb-10">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">
+            Personalize
+          </p>
+          <h1 className="text-[28px] font-bold leading-[1.15] tracking-tight text-foreground">
             {"What are your goals?"}
           </h1>
-          <p className="mt-2 text-base text-muted-foreground">
-            {"Select all that apply. We'll personalize your experience."}
+          <p className="mt-2 text-[15px] text-muted-foreground">
+            {"Select all that apply. We'll personalize your plan."}
           </p>
         </div>
 
         {/* Goals */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2.5">
           {goals.map((goal) => {
             const isSelected = selectedGoals.has(goal.id)
             return (
@@ -77,15 +93,15 @@ export default function GoalSelection() {
                 key={goal.id}
                 onClick={() => toggleGoal(goal.id)}
                 aria-pressed={isSelected}
-                className={`flex w-full items-start gap-4 rounded-2xl border p-5 text-left transition-all active:scale-[0.98] ${
+                className={`flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-all active:scale-[0.98] ${
                   isSelected
-                    ? "border-primary bg-primary/5"
-                    : "border-border bg-card hover:border-muted-foreground/20"
+                    ? "border-primary/40 bg-primary/5 shadow-[0_0_0_1px_rgba(46,204,113,0.15)]"
+                    : "border-border bg-card shadow-[0_1px_3px_0_rgba(0,0,0,0.04)] hover:border-muted-foreground/20"
                 }`}
               >
                 <div
-                  className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl ${
-                    isSelected ? "bg-primary" : "bg-muted"
+                  className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl transition-all ${
+                    isSelected ? "bg-primary shadow-[0_2px_8px_0_rgba(46,204,113,0.3)]" : "bg-muted"
                   }`}
                 >
                   <goal.icon
@@ -95,11 +111,11 @@ export default function GoalSelection() {
                     strokeWidth={2}
                   />
                 </div>
-                <div className="flex-1 pt-0.5">
+                <div className="flex-1">
                   <h3 className="text-sm font-semibold text-foreground">
                     {goal.title}
                   </h3>
-                  <p className="mt-0.5 text-sm text-muted-foreground">
+                  <p className="mt-0.5 text-[13px] text-muted-foreground">
                     {goal.description}
                   </p>
                 </div>
@@ -121,20 +137,23 @@ export default function GoalSelection() {
 
         {/* Level */}
         <div className="mt-10">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-secondary">
+            Fitness Level
+          </p>
           <h2 className="mb-4 text-xl font-bold tracking-tight text-foreground">
-            {"What's your level?"}
+            {"What's your experience?"}
           </h2>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2.5">
             {levels.map((level) => {
               const isSelected = selectedLevel === level.id
               return (
                 <button
                   key={level.id}
                   onClick={() => setSelectedLevel(level.id)}
-                  className={`flex w-full items-center justify-between rounded-2xl border p-5 text-left transition-all active:scale-[0.98] ${
+                  className={`flex w-full items-center justify-between rounded-2xl border p-4 text-left transition-all active:scale-[0.98] ${
                     isSelected
-                      ? "border-foreground bg-foreground text-background"
-                      : "border-border bg-card hover:border-muted-foreground/20"
+                      ? "border-foreground bg-foreground shadow-[0_4px_14px_0_rgba(31,41,51,0.2)]"
+                      : "border-border bg-card shadow-[0_1px_3px_0_rgba(0,0,0,0.04)] hover:border-muted-foreground/20"
                   }`}
                 >
                   <div>
@@ -146,8 +165,8 @@ export default function GoalSelection() {
                       {level.title}
                     </h3>
                     <p
-                      className={`mt-0.5 text-sm ${
-                        isSelected ? "text-background/70" : "text-muted-foreground"
+                      className={`mt-0.5 text-[13px] ${
+                        isSelected ? "text-background/60" : "text-muted-foreground"
                       }`}
                     >
                       {level.description}
@@ -177,9 +196,9 @@ export default function GoalSelection() {
           <button
             onClick={handleContinue}
             disabled={!canContinue}
-            className={`flex w-full items-center justify-center gap-2 rounded-2xl py-4 text-base font-semibold transition-all ${
+            className={`flex w-full items-center justify-center gap-2 rounded-2xl py-4 text-[15px] font-semibold transition-all ${
               canContinue
-                ? "bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98]"
+                ? "bg-primary text-primary-foreground shadow-[0_4px_14px_0_rgba(46,204,113,0.3)] hover:shadow-[0_6px_20px_0_rgba(46,204,113,0.4)] active:scale-[0.98]"
                 : "bg-muted text-muted-foreground/40 cursor-not-allowed"
             }`}
           >

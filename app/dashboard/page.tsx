@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { BottomNav } from "@/components/bottom-nav"
-import { Check, ChevronRight, Dumbbell, Apple } from "lucide-react"
+import { Check, ChevronRight, Dumbbell, Apple, Flame } from "lucide-react"
 
 export default function Dashboard() {
   const [checklist, setChecklist] = useState([
@@ -26,51 +26,60 @@ export default function Dashboard() {
     )
   }
 
-  const circumference = 2 * Math.PI * 54
+  const circumference = 2 * Math.PI * 52
   const offset = circumference * (1 - healthScore / 100)
 
   return (
-    <main className="min-h-dvh bg-background pb-20">
+    <main className="min-h-dvh bg-muted pb-24">
       <div className="mx-auto max-w-md">
         {/* Header */}
-        <header className="px-6 pt-14 pb-6">
-          <p className="text-sm font-medium text-muted-foreground">
-            Good morning
-          </p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight text-foreground">
-            Alex
-          </h1>
+        <header className="bg-background px-6 pt-14 pb-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-[13px] font-medium text-muted-foreground">
+                Good morning
+              </p>
+              <h1 className="mt-0.5 text-2xl font-bold tracking-tight text-foreground">
+                Alex
+              </h1>
+            </div>
+            <div className="flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5">
+              <Flame className="h-4 w-4 text-primary" strokeWidth={2.5} />
+              <span className="text-sm font-bold text-primary">5</span>
+            </div>
+          </div>
         </header>
 
         {/* Content */}
-        <div className="flex flex-col gap-4 px-5">
-          {/* Health Score */}
-          <section className="rounded-2xl border border-border bg-card p-6">
+        <div className="flex flex-col gap-3 px-5 pt-4">
+          {/* Health Score Card */}
+          <section className="rounded-2xl bg-card p-6 shadow-[0_1px_3px_0_rgba(0,0,0,0.04)]">
             <div className="flex items-start justify-between">
               <div>
-                <h2 className="text-sm font-semibold text-foreground">
+                <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
                   {"Today's Score"}
-                </h2>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {completedCount} of {totalCount} tasks done
                 </p>
+                <p className="mt-1 text-lg font-bold text-foreground">
+                  {completedCount} of {totalCount}
+                </p>
+                <p className="mt-0.5 text-[13px] text-muted-foreground">tasks completed</p>
               </div>
-              <div className="relative h-28 w-28 flex-shrink-0">
-                <svg className="h-28 w-28 -rotate-90" viewBox="0 0 120 120">
+              <div className="relative h-[108px] w-[108px] flex-shrink-0">
+                <svg className="h-[108px] w-[108px] -rotate-90" viewBox="0 0 116 116">
                   <circle
-                    cx="60"
-                    cy="60"
-                    r="54"
+                    cx="58"
+                    cy="58"
+                    r="52"
                     fill="none"
-                    strokeWidth="8"
+                    strokeWidth="7"
                     className="stroke-muted"
                   />
                   <circle
-                    cx="60"
-                    cy="60"
-                    r="54"
+                    cx="58"
+                    cy="58"
+                    r="52"
                     fill="none"
-                    strokeWidth="8"
+                    strokeWidth="7"
                     strokeLinecap="round"
                     strokeDasharray={circumference}
                     strokeDashoffset={offset}
@@ -78,10 +87,10 @@ export default function Dashboard() {
                   />
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-2xl font-bold tracking-tight text-foreground">
+                  <span className="text-[28px] font-bold tracking-tight text-foreground leading-none">
                     {healthScore}
                   </span>
-                  <span className="text-[10px] font-medium text-muted-foreground">
+                  <span className="mt-0.5 text-[10px] font-semibold text-muted-foreground">
                     / 100
                   </span>
                 </div>
@@ -92,30 +101,30 @@ export default function Dashboard() {
           {/* Progress Banner */}
           <Link
             href="/progress"
-            className="flex items-center justify-between rounded-2xl bg-foreground p-5 active:scale-[0.98] transition-transform"
+            className="flex items-center justify-between rounded-2xl bg-foreground p-5 shadow-[0_4px_14px_0_rgba(31,41,51,0.15)] active:scale-[0.98] transition-transform"
           >
             <div>
               <h3 className="text-sm font-semibold text-background">
                 Your Progress
               </h3>
-              <p className="mt-1 text-xs text-background/60">
+              <p className="mt-1 text-[13px] text-background/50">
                 See your body transformation
               </p>
             </div>
-            <ChevronRight className="h-5 w-5 text-background/40" strokeWidth={2} />
+            <ChevronRight className="h-5 w-5 text-background/30" strokeWidth={2} />
           </Link>
 
           {/* Daily Checklist */}
-          <section className="rounded-2xl border border-border bg-card p-5">
+          <section className="rounded-2xl bg-card p-5 shadow-[0_1px_3px_0_rgba(0,0,0,0.04)]">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-sm font-semibold text-foreground">
                 Daily Checklist
               </h2>
-              <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
+              <span className="rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-bold text-primary">
                 {completedCount}/{totalCount}
               </span>
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-0.5">
               {checklist.map((item) => (
                 <button
                   key={item.id}
@@ -125,7 +134,7 @@ export default function Dashboard() {
                   <div
                     className={`flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md transition-all ${
                       item.completed
-                        ? "bg-primary"
+                        ? "bg-primary shadow-[0_1px_4px_0_rgba(46,204,113,0.3)]"
                         : "border-2 border-border"
                     }`}
                   >
@@ -154,7 +163,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-2 gap-3">
             <Link
               href="/workout"
-              className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/30 active:scale-[0.98]"
+              className="flex flex-col gap-3 rounded-2xl bg-card p-5 shadow-[0_1px_3px_0_rgba(0,0,0,0.04)] transition-all hover:shadow-[0_2px_8px_0_rgba(0,0,0,0.06)] active:scale-[0.98]"
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
                 <Dumbbell className="h-5 w-5 text-primary" strokeWidth={2} />
@@ -163,23 +172,23 @@ export default function Dashboard() {
                 <h3 className="text-sm font-semibold text-foreground">
                   Start Workout
                 </h3>
-                <p className="mt-0.5 text-xs text-muted-foreground">
+                <p className="mt-0.5 text-[13px] text-muted-foreground">
                   15 min session
                 </p>
               </div>
             </Link>
             <Link
               href="/nutrition"
-              className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/30 active:scale-[0.98]"
+              className="flex flex-col gap-3 rounded-2xl bg-card p-5 shadow-[0_1px_3px_0_rgba(0,0,0,0.04)] transition-all hover:shadow-[0_2px_8px_0_rgba(0,0,0,0.06)] active:scale-[0.98]"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-chart-2/10">
-                <Apple className="h-5 w-5 text-chart-2" strokeWidth={2} />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/10">
+                <Apple className="h-5 w-5 text-secondary" strokeWidth={2} />
               </div>
               <div>
                 <h3 className="text-sm font-semibold text-foreground">
                   {"Today's Recipe"}
                 </h3>
-                <p className="mt-0.5 text-xs text-muted-foreground">
+                <p className="mt-0.5 text-[13px] text-muted-foreground">
                   {"Healthy & easy"}
                 </p>
               </div>
